@@ -4,7 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import obj.User;
@@ -41,7 +43,13 @@ public class CrossingDao {
     
     public List<User> selectAllUser() throws SQLException {
         List<User> users = new ArrayList<>();
-        
+        String select= "select * from user";
+        Statement st=conexion.createStatement();
+        ResultSet rs=st.executeQuery(select);
+        while(rs.next()){
+         User u= new User();
+         
+        }
         return users;
     }
     
