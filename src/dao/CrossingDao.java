@@ -52,6 +52,7 @@ public class CrossingDao {
         ResultSet rs=st.executeQuery(select);
         while(rs.next()){
          User u= new User();
+         users.add(u);
         }
         return users;
     }
@@ -63,6 +64,7 @@ public class CrossingDao {
         ResultSet rs=st.executeQuery(select);
         while(rs.next()){
             Character c=new Character();
+            characters.add(c);
         }
         return characters;
     }
@@ -74,6 +76,7 @@ public class CrossingDao {
         ResultSet rs=st.executeQuery(select);
         while(rs.next()){
             Item i=new Item();
+            items.add(i);
         }
         return items;
     }
@@ -85,6 +88,7 @@ public class CrossingDao {
         ResultSet rs=st.executeQuery(select);
         while(rs.next()){
             Contact c=new Contact();
+            contacts.add(c);
         }
         return contacts;
     }
@@ -96,6 +100,7 @@ public class CrossingDao {
         ResultSet rs=st.executeQuery(select);
         while(rs.next()){
             Inventory i=new Inventory();
+            inventories.add(i);
         }
         return inventories;
     }
