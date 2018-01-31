@@ -111,7 +111,7 @@ public class CrossingDao {
         return characters;
     }
     
-        public void insertarCharacter(Character c) throws SQLException {
+    public void insertarCharacter(Character c) throws SQLException {
         String insert = "insert into stucomcrossing.character values(?,?,?,?)";
         PreparedStatement ps = conexion.prepareStatement(insert);
         ps.setString(1, c.getName());
@@ -153,7 +153,37 @@ public class CrossingDao {
         }
         return items;
     }
-
+    public void insertarItem(Item i) throws SQLException {
+        String insert = "insert into stucomcrossing.item values(?,?,?,?,?)";
+        PreparedStatement ps = conexion.prepareStatement(insert);
+        ps.setString(1, i.getName());
+        ps.setDouble(2, i.getPrice());
+        ps.setDouble(3, i.getSaleprice());
+        ps.setString(4, i.getType());
+        ps.setString(5, i.getStyle());
+        ps.executeUpdate();
+        ps.close();
+        System.out.println("----------------------------------");
+    }
+    
+        public boolean checkItem(String name) throws SQLException {
+        boolean check = false;
+        List<Item> items = new ArrayList<>();
+        String select = "select * from stucomcrossing.item";
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(select);
+        while (rs.next()) {
+            Item i = new Item();
+            i.setName(rs.getString("name"));
+            if (name.equals(i.getName())) {
+                check = true;
+                System.out.println("-El item " + name + " ya existe");
+                System.out.println("----------------------------------");
+            }
+        }
+        return check;
+    }    
+    
     public List<Contact> selectAllContact() throws SQLException {
         List<Contact> contacts = new ArrayList<>();
         String select = "select * from contact";
@@ -178,4 +208,22 @@ public class CrossingDao {
         return inventories;
     }
 
+    public void login(User user) throws SQLException{
+        boolean check = false;
+        String select = "select * from user";
+        Statement st = conexion.createStatement();
+        ResultSet rs = st.executeQuery(select);
+        while (rs.next()) {
+            if(user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password"))){
+                check = true;
+            }
+        }
+        if(check==true){
+            System.out.println("El usuario "+user.getUsername()+" se ha logeado correctamente!");
+            System.out.println("----------------------------------");
+        }else{
+            System.out.println("El usuario "+user.getUsername()+" es erroneo!");
+            System.out.println("----------------------------------");
+        }
+    }
 }

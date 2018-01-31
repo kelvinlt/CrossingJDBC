@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import obj.User;
 import obj.Character;
+import obj.Item;
 
 public class CrossingJDBC {
 
@@ -14,25 +15,43 @@ public class CrossingJDBC {
             //iniciar conexion con base de datos
             crossingDao.conectar();
             
+            //(1)creacion de un usuario y insercion con chekeo si ya esta introducido
             User kelvin= new User("kelvin", "123", 0, 0, "Barcelona", 0);
             System.out.println("Insertando usuario "+kelvin.getUsername()+"...");
             if(crossingDao.checkUser(kelvin.getUsername()) == false){
                 crossingDao.insertarUser(kelvin);
             };
             
+            //(1)creacion de un usuario y insercion con chekeo si ya esta introducido
             User saiden= new User("saiden", "123", 0, 0, "Barcelona", 0);
             System.out.println("Insertando usuario "+saiden.getUsername()+"...");
             if(crossingDao.checkUser(saiden.getUsername()) == false){
                 crossingDao.insertarUser(saiden);
             };
 
+             //(2)select de un usuario a partir de username(nombre) y impresion de todos sus datos
             crossingDao.selectOneUser("kelvin"); 
             
-            Character nameless = new Character("emiya","daw","tejado","flecha");
+            //(3)creacion de un personaje y insercion con chekeo si ya esta introducido
+            Character nameless = new Character("emiya","daw","tejado","sofa");
             System.out.println("Insertando personaje " + nameless.getName()+ " a la base datos...");
             if(crossingDao.checkCharacter(nameless.getName()) == false){
                 crossingDao.insertarCharacter(nameless);
             };
+            
+            //(4)creacion de un item y insercion con chekeo si ya esta introducido
+            Item sofa = new Item("sofa", 1, 2, "mueble", "classico");
+            System.out.println("Insertando item " + sofa.getName()+ " a la base datos...");
+            if(crossingDao.checkItem(sofa.getName()) == false){
+                crossingDao.insertarItem(sofa);
+            };
+            
+            //(5)ejemplo de login correcto
+            crossingDao.login(kelvin);
+            
+            //(5)ejemplo de login erroneo
+            User faker = new User("faker", "fake123");
+            crossingDao.login(faker);
             
             users = crossingDao.selectAllUser();
             System.out.println("Lista de usuarios en la base de datos:");
@@ -48,17 +67,5 @@ public class CrossingJDBC {
             
         } catch (Exception e) {
         }
-    }
-    
-    public static void menu(){
-        System.out.println("------------------------------------");
-        System.out.println("1-Registrar nuevo usario");
-        System.out.println("2-Buscar usuario apartir de un nombre");
-        System.out.println("3-Registrar nuevo personaje");
-        System.out.println("4-Registrar nuevo item");
-        System.out.println("5-Login de usuario");
-        System.out.println("");
-        System.out.println("------------------------------------");
-    }
-    
+    }   
 }
