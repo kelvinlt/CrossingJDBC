@@ -64,19 +64,19 @@ public class CrossingDao {
 
     public void selectOneUser(String searchName) throws SQLException {
         User userReturn = new User();
-        
-        String select = "select * from user where username='"  + searchName+"'";
+
+        String select = "select * from user where username='" + searchName + "'";
         Statement st = conexion.createStatement();
         ResultSet rs = st.executeQuery(select);
 
-        System.out.println("Buscando usuario: "+searchName);
+        System.out.println("Buscando usuario: " + searchName);
         while (rs.next()) {
-            System.out.println("Username: "+rs.getString("username"));
-            System.out.println("Password: "+rs.getString("password"));
-            System.out.println("Level: "+rs.getInt("level"));
-            System.out.println("Points: "+rs.getInt("points"));
-            System.out.println("Stucoins: "+rs.getInt("stucoins"));
-            System.out.println("Place: "+rs.getString("place"));
+            System.out.println("Username: " + rs.getString("username"));
+            System.out.println("Password: " + rs.getString("password"));
+            System.out.println("Level: " + rs.getInt("level"));
+            System.out.println("Points: " + rs.getInt("points"));
+            System.out.println("Stucoins: " + rs.getInt("stucoins"));
+            System.out.println("Place: " + rs.getString("place"));
             System.out.println("----------------------------------");
         }
     }
@@ -99,6 +99,25 @@ public class CrossingDao {
         return check;
     }
 
+    public void updateUsername(String old, String nuevo) throws SQLException {
+        System.out.println("Comprobando si el usuario " + old + " existe...");
+        if (checkUser(old) == true) {
+            if (checkUser(nuevo) == true) {
+                System.out.println("Actualizando datos de usuario:" + old + " a usuario:" + nuevo);
+                String update = "update user set username=? where username=?";
+                PreparedStatement ps = conexion.prepareStatement(update);
+                ps.setString(1, nuevo);
+                ps.setString(2, old);
+                ps.executeUpdate();
+                ps.close();
+                System.out.println("Actualizacion correcta");
+                System.out.println("----------------------------------");
+            }
+        } else {
+            System.out.println("No se ha encontrado el nombre de usuario en la base de datos");
+        }
+    }
+
     public List<Character> selectAllCharacter() throws SQLException {
         List<Character> characters = new ArrayList<>();
         String select = "select * from character";
@@ -110,7 +129,7 @@ public class CrossingDao {
         }
         return characters;
     }
-    
+
     public void insertarCharacter(Character c) throws SQLException {
         String insert = "insert into stucomcrossing.character values(?,?,?,?)";
         PreparedStatement ps = conexion.prepareStatement(insert);
@@ -122,7 +141,7 @@ public class CrossingDao {
         ps.close();
         System.out.println("----------------------------------");
     }
-        
+
     public boolean checkCharacter(String name) throws SQLException {
         boolean check = false;
         List<Character> characters = new ArrayList<>();
@@ -134,13 +153,12 @@ public class CrossingDao {
             c.setName(rs.getString("name"));
             if (name.equals(c.getName())) {
                 check = true;
-                System.out.println("-El personaje " + name + " ya existe");
+                System.out.println("-El personaje " + name + " existe");
                 System.out.println("----------------------------------");
             }
         }
         return check;
-    }    
-    
+    }
 
     public List<Item> selectAllItem() throws SQLException {
         List<Item> items = new ArrayList<>();
@@ -153,6 +171,7 @@ public class CrossingDao {
         }
         return items;
     }
+
     public void insertarItem(Item i) throws SQLException {
         String insert = "insert into stucomcrossing.item values(?,?,?,?,?)";
         PreparedStatement ps = conexion.prepareStatement(insert);
@@ -165,8 +184,8 @@ public class CrossingDao {
         ps.close();
         System.out.println("----------------------------------");
     }
-    
-        public boolean checkItem(String name) throws SQLException {
+
+    public boolean checkItem(String name) throws SQLException {
         boolean check = false;
         List<Item> items = new ArrayList<>();
         String select = "select * from stucomcrossing.item";
@@ -182,8 +201,8 @@ public class CrossingDao {
             }
         }
         return check;
-    }    
-    
+    }
+
     public List<Contact> selectAllContact() throws SQLException {
         List<Contact> contacts = new ArrayList<>();
         String select = "select * from contact";
@@ -208,21 +227,21 @@ public class CrossingDao {
         return inventories;
     }
 
-    public void login(User user) throws SQLException{
+    public void login(User user) throws SQLException {
         boolean check = false;
         String select = "select * from user";
         Statement st = conexion.createStatement();
         ResultSet rs = st.executeQuery(select);
         while (rs.next()) {
-            if(user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password"))){
+            if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password"))) {
                 check = true;
             }
         }
-        if(check==true){
-            System.out.println("El usuario "+user.getUsername()+" se ha logeado correctamente!");
+        if (check == true) {
+            System.out.println("El usuario " + user.getUsername() + " se ha logeado correctamente!");
             System.out.println("----------------------------------");
-        }else{
-            System.out.println("El usuario "+user.getUsername()+" es erroneo!");
+        } else {
+            System.out.println("El usuario " + user.getUsername() + " es erroneo!");
             System.out.println("----------------------------------");
         }
     }
