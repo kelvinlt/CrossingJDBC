@@ -177,6 +177,23 @@ public class CrossingDao {
         }
         return check;
     }
+    
+    public void updatePlaceCharacter(String name, String place) throws SQLException {
+        System.out.println("Comprobando si el personaje " + name + " existe...");
+        if (checkCharacter(name) == true) {
+            System.out.println("Actualizando lugar de personaje:" + name + " a lugar:" + place);
+            String update = "update stucomcrossing.character set place=? where name=?";
+            PreparedStatement ps = conexion.prepareStatement(update);
+            ps.setString(1, place);
+            ps.setString(2, name);
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Actualizacion correcta");
+            System.out.println("----------------------------------");
+
+        }else{
+            System.out.println("El usuario:"+name+" no existe");}
+    }
 
     public List<Item> selectAllItem() throws SQLException {
         List<Item> items = new ArrayList<>();

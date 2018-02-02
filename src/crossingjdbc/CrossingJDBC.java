@@ -15,7 +15,7 @@ public class CrossingJDBC {
             //iniciar conexion con base de datos
             crossingDao.conectar();
             
-            //(1)creacion de un usuario y insercion con chekeo si ya esta introducido
+            System.out.println("");//(1)creacion de un usuario y insercion con chekeo si ya esta introducido
             User kelvin= new User("kelvin", "123", 0, 0, "Barcelona", 0);
             System.out.println("Insertando usuario "+kelvin.getUsername()+"...");
             if(crossingDao.checkUser(kelvin.getUsername()) == false){
@@ -65,6 +65,14 @@ public class CrossingJDBC {
             
             //(7)ejeplo de update de lugar de un usuario
             crossingDao.updatePlaceUser("saiden", "casitanew");
+            
+            //8ejeplo de update de lugar de un personaje
+            crossingDao.updatePlaceCharacter("emiya", "mansion");
+            //9
+            
+            //10
+            
+            //11
             
             //cerrar conexion con base de datos
             crossingDao.desconectar();
