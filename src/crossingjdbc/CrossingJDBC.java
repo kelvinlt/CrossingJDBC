@@ -59,7 +59,13 @@ public class CrossingJDBC {
                 System.out.println("Username: "+user.getUsername());
             }
             System.out.println("----------------------------------");
+            
+            //(6)ejemplo de update de username de un usuario
             crossingDao.updateUsername("kelvin", "kelvinew");
+            
+            //(7)ejeplo de update de lugar de un usuario
+            crossingDao.updatePlaceUser("saiden", "casitanew");
+            
             //cerrar conexion con base de datos
             crossingDao.desconectar();
             

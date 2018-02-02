@@ -102,7 +102,8 @@ public class CrossingDao {
     public void updateUsername(String old, String nuevo) throws SQLException {
         System.out.println("Comprobando si el usuario " + old + " existe...");
         if (checkUser(old) == true) {
-            if (checkUser(nuevo) == true) {
+            System.out.println("Comprobando si el usuario " + nuevo + " existe...");
+            if (checkUser(nuevo) == false) {
                 System.out.println("Actualizando datos de usuario:" + old + " a usuario:" + nuevo);
                 String update = "update user set username=? where username=?";
                 PreparedStatement ps = conexion.prepareStatement(update);
@@ -116,6 +117,23 @@ public class CrossingDao {
         } else {
             System.out.println("No se ha encontrado el nombre de usuario en la base de datos");
         }
+    }
+
+    public void updatePlaceUser(String user, String place) throws SQLException {
+        System.out.println("Comprobando si el usuario " + user + " existe...");
+        if (checkUser(user) == true) {
+            System.out.println("Actualizando lugar de usuario:" + user + " a lugar:" + place);
+            String update = "update user set place=? where username=?";
+            PreparedStatement ps = conexion.prepareStatement(update);
+            ps.setString(1, place);
+            ps.setString(2, user);
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Actualizacion correcta");
+            System.out.println("----------------------------------");
+
+        }else{
+            System.out.println("El usuario:"+user+" no existe");}
     }
 
     public List<Character> selectAllCharacter() throws SQLException {
