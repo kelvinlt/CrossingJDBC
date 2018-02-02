@@ -297,4 +297,6 @@ public class CrossingDao {
             System.out.println("----------------------------------");
         }
     }
+    
+    public void selectCharactersFromUserPlace() throws SQLException{}
 }
