@@ -92,8 +92,7 @@ public class CrossingDao {
             u.setUsername(rs.getString("username"));
             if (username.equals(u.getUsername())) {
                 check = true;
-                System.out.println("-El usuario " + username + " ya existe");
-                System.out.println("----------------------------------");
+                System.out.println("-El usuario " + username + " existe");
             }
         }
         return check;
@@ -112,6 +111,9 @@ public class CrossingDao {
                 ps.executeUpdate();
                 ps.close();
                 System.out.println("Actualizacion correcta");
+                System.out.println("----------------------------------");
+            } else {
+                System.out.println("Como el usuario ya exite no se ha modificado");
                 System.out.println("----------------------------------");
             }
         } else {
@@ -132,8 +134,9 @@ public class CrossingDao {
             System.out.println("Actualizacion correcta");
             System.out.println("----------------------------------");
 
-        }else{
-            System.out.println("El usuario:"+user+" no existe");}
+        } else {
+            System.out.println("El usuario:" + user + " no existe");
+        }
     }
 
     public List<Character> selectAllCharacter() throws SQLException {
@@ -172,12 +175,11 @@ public class CrossingDao {
             if (name.equals(c.getName())) {
                 check = true;
                 System.out.println("-El personaje " + name + " existe");
-                System.out.println("----------------------------------");
             }
         }
         return check;
     }
-    
+
     public void updatePlaceCharacter(String name, String place) throws SQLException {
         System.out.println("Comprobando si el personaje " + name + " existe...");
         if (checkCharacter(name) == true) {
@@ -191,8 +193,9 @@ public class CrossingDao {
             System.out.println("Actualizacion correcta");
             System.out.println("----------------------------------");
 
-        }else{
-            System.out.println("El usuario:"+name+" no existe");}
+        } else {
+            System.out.println("El usuario:" + name + " no existe");
+        }
     }
 
     public List<Item> selectAllItem() throws SQLException {
@@ -231,14 +234,13 @@ public class CrossingDao {
             i.setName(rs.getString("name"));
             if (name.equals(i.getName())) {
                 check = true;
-                System.out.println("-El item " + name + " ya existe");
-                System.out.println("----------------------------------");
+                System.out.println("-El item " + name + " existe");
             }
         }
         return check;
     }
-    
-        public void updatePrecioItem(String name, double precio) throws SQLException {
+
+    public void updatePrecioItem(String name, double precio) throws SQLException {
         System.out.println("Comprobando si el item " + name + " existe...");
         if (checkItem(name) == true) {
             System.out.println("Actualizando precio de item:" + name + " a precio:" + precio);
@@ -251,8 +253,9 @@ public class CrossingDao {
             System.out.println("Actualizacion correcta");
             System.out.println("----------------------------------");
 
-        }else{
-            System.out.println("El item:"+name+" no existe");}
+        } else {
+            System.out.println("El item:" + name + " no existe");
+        }
     }
 
     public List<Contact> selectAllContact() throws SQLException {
@@ -297,6 +300,43 @@ public class CrossingDao {
             System.out.println("----------------------------------");
         }
     }
+
+    public void selectCharactersFromUserPlace(String username) throws SQLException {
+        String sitio = "";
+        if (checkUser(username) == true) {
+            String select = "select place from user where username=?";
+            PreparedStatement ps = conexion.prepareStatement(select);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                sitio = rs.getString("place");
+            }
+            if (!sitio.equals("")) {
+                String select2 = "SELECT name FROM stucomcrossing.character WHERE place=barcelona";
+                PreparedStatement ps2 = conexion.prepareStatement(select2);
+                ps2.setString(1, sitio);
+                ResultSet rs2 = ps2.executeQuery();
+                if (rs2.next()) {
+                    String test = rs.getString("name");
+                    System.out.println(test);
+                    //System.out.println(rs.getString("name"));
+                }
+                ps2.close();
+            }
+
+        }
+    }
     
-    public void selectCharactersFromUserPlace() throws SQLException{}
+    public void comprarObjeto(String objeto,String usuario) throws SQLException{
+        if(checkUser(usuario)){
+            if(checkItem(objeto)){
+                
+            }
+        }
+    }
+    
+    public void venderObjeto(String objeto,String usuario) throws SQLException{
+        
+    }
+    
 }
