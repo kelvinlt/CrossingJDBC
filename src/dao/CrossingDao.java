@@ -237,6 +237,23 @@ public class CrossingDao {
         }
         return check;
     }
+    
+        public void updatePrecioItem(String name, double precio) throws SQLException {
+        System.out.println("Comprobando si el item " + name + " existe...");
+        if (checkItem(name) == true) {
+            System.out.println("Actualizando precio de item:" + name + " a precio:" + precio);
+            String update = "update item set price=? where name=?";
+            PreparedStatement ps = conexion.prepareStatement(update);
+            ps.setDouble(1, precio);
+            ps.setString(2, name);
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("Actualizacion correcta");
+            System.out.println("----------------------------------");
+
+        }else{
+            System.out.println("El item:"+name+" no existe");}
+    }
 
     public List<Contact> selectAllContact() throws SQLException {
         List<Contact> contacts = new ArrayList<>();

@@ -60,19 +60,23 @@ public class CrossingJDBC {
             }
             System.out.println("----------------------------------");
             
-            //(6)ejemplo de update de username de un usuario
+            //(6) ejemplo de update de username de un usuario
             crossingDao.updateUsername("kelvin", "kelvinew");
             
-            //(7)ejeplo de update de lugar de un usuario
+            //(7) ejeplo de update de lugar de un usuario
             crossingDao.updatePlaceUser("saiden", "casitanew");
             
-            //8ejeplo de update de lugar de un personaje
+            //(8) ejemplo de update de lugar de un personaje
             crossingDao.updatePlaceCharacter("emiya", "mansion");
-            //9
             
-            //10
+            //(9) ejemplo de update de precio de un item
+            crossingDao.updatePrecioItem("sofa", 12);
             
-            //11
+            //(10) ejemplo de obtener los personajes que estan en el mismo lugar que un usuario dado
+            
+            
+            //(11) 
+            
             
             //cerrar conexion con base de datos
             crossingDao.desconectar();
