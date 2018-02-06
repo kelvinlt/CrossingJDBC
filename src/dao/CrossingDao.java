@@ -327,16 +327,33 @@ public class CrossingDao {
         }
     }
     
-    public void comprarObjeto(String objeto,String usuario) throws SQLException{
-        if(checkUser(usuario)){
-            if(checkItem(objeto)){
+    public void comprarObjeto(String objeto,String usuario,int numero) throws SQLException{
+        if(checkUser(usuario)==true){ //comprobar que el usuario tiene suficiente credito
+            if(checkItem(objeto)==true){//comprobar cuanto vale el item
                 
+                String update = "update invetory set quantity=? where user=? and item=?";
+                PreparedStatement ps = conexion.prepareStatement(update);
+                ps.setInt(1, numero);
+                ps.setString(2, usuario);
+                ps.setString(3, objeto);
+                
+                ps.executeQuery();
+                
+                
+            }else{
+                String insert = "update inveroty set user=? and item=? where user=? and item=?";
             }
+        }else{
+            System.out.println("El usuario no existe");
         }
     }
     
     public void venderObjeto(String objeto,String usuario) throws SQLException{
-        
+        if(checkUser(usuario)==true){
+            if(checkItem(objeto)==true){
+            
+            }
+        }
     }
     
 }
